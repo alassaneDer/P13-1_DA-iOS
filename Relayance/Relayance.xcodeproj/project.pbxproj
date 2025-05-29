@@ -27,6 +27,7 @@
 		ED2169402DE8065700264B04 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED21693F2DE8065700264B04 /* String+Validations.swift */; };
 		ED2169422DE806E800264B04 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169412DE806E800264B04 /* PersistenceService.swift */; };
 		ED2169442DE8070200264B04 /* ClientViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169432DE8070200264B04 /* ClientViewmodel.swift */; };
+		ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		ED21693F2DE8065700264B04 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		ED2169412DE806E800264B04 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		ED2169432DE8070200264B04 /* ClientViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodel.swift; sourceTree = "<group>"; };
+		ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				ED21692A2DE7EA9E00264B04 /* DateExtensionTests.swift */,
 				ED21692C2DE7EB2200264B04 /* ModelDataTests.swift */,
 				ED21692E2DE7EB9100264B04 /* SourceMock.json */,
+				ED2169452DE812D500264B04 /* ViewmodelTests */,
 			);
 			path = RelayanceTests;
 			sourceTree = "<group>";
@@ -194,6 +197,14 @@
 				ED21693F2DE8065700264B04 /* String+Validations.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		ED2169452DE812D500264B04 /* ViewmodelTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */,
+			);
+			path = ViewmodelTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +360,7 @@
 				ED2169292DE7E88900264B04 /* ClientTests.swift in Sources */,
 				ED21692B2DE7EA9E00264B04 /* DateExtensionTests.swift in Sources */,
 				ED21692D2DE7EB2200264B04 /* ModelDataTests.swift in Sources */,
+				ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

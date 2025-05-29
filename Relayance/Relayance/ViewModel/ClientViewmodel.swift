@@ -63,7 +63,7 @@ class ClientViewmodel: ObservableObject {
         return true
     }
     
-    private func clientExist(client: Client) -> Bool {
+    func clientExist(client: Client) -> Bool {
         clients.contains { $0.email == client.email }
     }
     
