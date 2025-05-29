@@ -22,6 +22,8 @@
 		ED2169292DE7E88900264B04 /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169282DE7E88900264B04 /* ClientTests.swift */; };
 		ED21692B2DE7EA9E00264B04 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED21692A2DE7EA9E00264B04 /* DateExtensionTests.swift */; };
 		ED21692D2DE7EB2200264B04 /* ModelDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED21692C2DE7EB2200264B04 /* ModelDataTests.swift */; };
+		ED21692F2DE7EB9100264B04 /* SourceMock.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21692E2DE7EB9100264B04 /* SourceMock.json */; };
+		ED2169302DE7EB9100264B04 /* SourceMock.json in Resources */ = {isa = PBXBuildFile; fileRef = ED21692E2DE7EB9100264B04 /* SourceMock.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,7 @@
 		ED2169282DE7E88900264B04 /* ClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientTests.swift; sourceTree = "<group>"; };
 		ED21692A2DE7EA9E00264B04 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		ED21692C2DE7EB2200264B04 /* ModelDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDataTests.swift; sourceTree = "<group>"; };
+		ED21692E2DE7EB9100264B04 /* SourceMock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SourceMock.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,7 @@
 				ED2169282DE7E88900264B04 /* ClientTests.swift */,
 				ED21692A2DE7EA9E00264B04 /* DateExtensionTests.swift */,
 				ED21692C2DE7EB2200264B04 /* ModelDataTests.swift */,
+				ED21692E2DE7EB9100264B04 /* SourceMock.json */,
 			);
 			path = RelayanceTests;
 			sourceTree = "<group>";
@@ -256,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				422740782C3BF4DD00E7522C /* Preview Assets.xcassets in Resources */,
+				ED21692F2DE7EB9100264B04 /* SourceMock.json in Resources */,
 				422740F92C3ED02400E7522C /* Source.json in Resources */,
 				422740752C3BF4DD00E7522C /* Assets.xcassets in Resources */,
 			);
@@ -265,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED2169302DE7EB9100264B04 /* SourceMock.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
