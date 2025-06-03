@@ -33,7 +33,6 @@ struct DetailClientView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Supprimer") {
-                    // suppression
                     viewmodel.supprimerClient(client: client)
                     self.presentationMode.wrappedValue.dismiss()
                 }

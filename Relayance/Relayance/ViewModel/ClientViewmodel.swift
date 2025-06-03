@@ -28,6 +28,7 @@ class ClientViewmodel: ObservableObject {
     
     func creerNouveauClient(nom: String, email: String) {
         /// verifier email avant de créer
+        /// verifier que le nom n'est pas vide
         /// verifier existance du client avant de créer...eviter duplicat
         guard email.isEmail() else {
             message = "L'email n'est pas valide."

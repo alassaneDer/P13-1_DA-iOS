@@ -27,7 +27,6 @@ struct AjoutClientView: View {
                 .font(.title2)
                 .textInputAutocapitalization(.never)
             Button("Ajouter") {
-                //Ajout d'un client
                 viewmodel.creerNouveauClient(nom: nom, email: email)
                 dismissModal.toggle()
             }

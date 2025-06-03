@@ -50,4 +50,3 @@ final class DateExtensionTests: XCTestCase {
         XCTAssertEqual(year, 2024, "L'année doit être 2024")
     }
 }
-
