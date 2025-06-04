@@ -25,6 +25,7 @@
 		ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */; };
 		ED8148102DE98DA4004F5EFE /* ModelDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED81480F2DE98DA4004F5EFE /* ModelDataTest.swift */; };
 		EDA510DE2DE9520C0015139C /* ClientViewmodelintegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA510DD2DE9520C0015139C /* ClientViewmodelintegrationTests.swift */; };
+		EDCBB5F22DF05A8F0039F18C /* PersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBB5F12DF05A8F0039F18C /* PersistenceServiceTests.swift */; };
 		EDE048D72DEEFABF004E9299 /* TestSource.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE048D62DEEFABF004E9299 /* TestSource.json */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		ED81480F2DE98DA4004F5EFE /* ModelDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDataTest.swift; sourceTree = "<group>"; };
 		ED8148112DE9AB21004F5EFE /* Relayance.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Relayance.xctestplan; sourceTree = "<group>"; };
 		EDA510DD2DE9520C0015139C /* ClientViewmodelintegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodelintegrationTests.swift; sourceTree = "<group>"; };
+		EDCBB5F12DF05A8F0039F18C /* PersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceTests.swift; sourceTree = "<group>"; };
 		EDE048D62DEEFABF004E9299 /* TestSource.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TestSource.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 				ED81480F2DE98DA4004F5EFE /* ModelDataTest.swift */,
 				EDE048D62DEEFABF004E9299 /* TestSource.json */,
 				ED2169452DE812D500264B04 /* ViewmodelTests */,
+				EDCBB5F12DF05A8F0039F18C /* PersistenceServiceTests.swift */,
 			);
 			path = TestUnitaires;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				ED2169292DE7E88900264B04 /* ClientTests.swift in Sources */,
 				ED21692B2DE7EA9E00264B04 /* DateExtensionTests.swift in Sources */,
 				EDA510DE2DE9520C0015139C /* ClientViewmodelintegrationTests.swift in Sources */,
+				EDCBB5F22DF05A8F0039F18C /* PersistenceServiceTests.swift in Sources */,
 				ED8148102DE98DA4004F5EFE /* ModelDataTest.swift in Sources */,
 				ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */,
 			);

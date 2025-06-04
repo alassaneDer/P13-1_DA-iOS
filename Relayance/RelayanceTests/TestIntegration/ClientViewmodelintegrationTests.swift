@@ -88,7 +88,7 @@ class ClientViewModelIntegrationTests: XCTestCase {
         viewModel.creerNouveauClient(nom: "frida kahlo", email: inValideEmail)
         
         /// Then:
-        XCTAssertEqual(viewModel.message, "L'email n'est pas valide.", "The error message is set")
+        XCTAssertEqual(viewModel.message, "L'email n'est pas valide", "The error message is set")
         XCTAssertEqual(viewModel.clients.count, 8, "Clients should be 8")
     }
     

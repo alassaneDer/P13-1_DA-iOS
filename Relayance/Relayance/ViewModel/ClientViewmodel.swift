@@ -40,7 +40,7 @@ class ClientViewmodel: ObservableObject {
         }
         
         guard email.isEmail() else {
-            message = "L'email n'est pas valide."
+            message = "L'email n'est pas valide"
             return
         }
         
@@ -55,7 +55,7 @@ class ClientViewmodel: ObservableObject {
         
         if !clientExist(client: newClient) {
             clients.append(newClient)
-            message = "Client ajouté avec succes."
+            message = "Client ajouté avec succes"
         } else {
             message = "Le client existe déjà."
         }
@@ -79,7 +79,7 @@ class ClientViewmodel: ObservableObject {
     func supprimerClient(client: Client) {
         if let index = clients.firstIndex(where: { $0.id == client.id }) {
             clients.remove(at: index)
-            message = "Client supprimer avec success."
+            message = "Client supprimer avec success"
         }
     }
 }
