@@ -8,28 +8,37 @@
 import Foundation
 
 class ClientViewmodel: ObservableObject {
+    // MARK: - properties
+    
     @Published var clients: [Client] = [] {
         didSet {
-            print("changement détectée, sauvegarde des clients...")
+            print("change detected, sauving clients...")
             PersistenceService.save(clients: clients)
         }
-    }/// le didset rend la sauvegarde automatique
+    }
     
     @Published var message: String = ""
     
+    // MARK: - initialization
+
     init() {
         chargerClients()
-        print("clients chargés depuis persistance doc folder.)")
+        print("clients load from persistance.)")
     }
     
+    
+    // MARK: - methods
+
     func chargerClients() {
         self.clients = PersistenceService.load()
     }
     
     func creerNouveauClient(nom: String, email: String) {
-        /// verifier email avant de créer
-        /// verifier que le nom n'est pas vide
-        /// verifier existance du client avant de créer...eviter duplicat
+        guard !nom.isEmpty else {
+            message = "Veuillez renseigner un nom"
+            return
+        }
+        
         guard email.isEmail() else {
             message = "L'email n'est pas valide."
             return
@@ -46,6 +55,7 @@ class ClientViewmodel: ObservableObject {
         
         if !clientExist(client: newClient) {
             clients.append(newClient)
+            message = "Client ajouté avec succes."
         } else {
             message = "Le client existe déjà."
         }
@@ -55,13 +65,7 @@ class ClientViewmodel: ObservableObject {
     func estNouveauClient(client: Client) -> Bool {
         let today = Date.now
         let dateCreation = client.dateCreation
-        
-        if today.getDay() != dateCreation.getDay() ||
-            today.getMonth() != dateCreation.getMonth() ||
-            today.getDay() != dateCreation.getDay() {
-            return false
-        }
-        return true
+        return Calendar.current.isDate(dateCreation, inSameDayAs: today)
     }
     
     func clientExist(client: Client) -> Bool {
@@ -75,6 +79,7 @@ class ClientViewmodel: ObservableObject {
     func supprimerClient(client: Client) {
         if let index = clients.firstIndex(where: { $0.id == client.id }) {
             clients.remove(at: index)
+            message = "Client supprimer avec success."
         }
     }
 }
