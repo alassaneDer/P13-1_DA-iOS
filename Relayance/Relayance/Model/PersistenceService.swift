@@ -8,22 +8,24 @@
 import Foundation
 
 class PersistenceService {
-    /// URL du fichier dans le document de l'app
+    /// optional override URL for testing purpose
     static var overrideFileURL: URL?
     
+    /// URL of the app's document directory
     private static var documentsFolderURL: URL {
         do {
             return try FileManager.default.url(
                 for: .documentDirectory,
                 in: .userDomainMask,
                 appropriateFor: nil,
-                create: false
+                create: true
             )
         } catch {
-            fatalError("Impossible de trouver le dossier document.")
+            fatalError("Failed to access to document directory: \(error).")
         }
     }
     
+    /// Active file URL, either the override or the default Source.json in documents
     static var activeFileURL: URL {
         return overrideFileURL ?? documentsFolderURL.appendingPathComponent("Source.json")
     }
@@ -36,13 +38,21 @@ class PersistenceService {
                 let decoder = JSONDecoder()
                 return try decoder.decode([Client].self, from: data)
             } catch {
+                print("Failed to load clients from \(urlToLoad): \(error)")
                 if overrideFileURL != nil {
                     return []
                 }
             }
         }
-        return ModelData.chargement("Source.json")
+        do {
+            return try ModelData.chargement("Source")
+        } catch {
+            print("Failed to load defaul clients: \(error)")
+            return []
+        }
     }
+    
+    
     static func save(clients: [Client]) {
         do {
             let encoder = JSONEncoder()
@@ -50,12 +60,12 @@ class PersistenceService {
             let data = try encoder.encode(clients)
             try data.write(to: activeFileURL, options: .atomic)
         } catch {
-            print("Impossible de sauvegarder les clients dans le fichier: \(error)")
+            print("Failed to save clients to \(activeFileURL): \(error)")
         }
     }
     
     
-    /// methode utilitaire pour nettoyer le fichier de test
+    /// clear test data by removing the override file
     static func clearTestData() {
         if let testURL = overrideFileURL, FileManager.default.fileExists(atPath: testURL.path) {
             try? FileManager.default.removeItem(at: testURL)

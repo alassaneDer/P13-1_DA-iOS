@@ -22,7 +22,11 @@ struct Client: Codable, Hashable, Identifiable {
         case dateCreationString = "date_creation"
     }
     
-    /// Constructeur explicite pour créer une nouvelle instance de Client en code.
+    /// Initializes a new Client instance.
+        /// - Parameters:
+        ///   - nom: The client's name.
+        ///   - email: The client's email.
+        ///   - dateCreationString: The ISO 8601 formatted creation date string.
     init(nom: String, email: String, dateCreationString: String) {
         self.nom = nom
         self.email = email
