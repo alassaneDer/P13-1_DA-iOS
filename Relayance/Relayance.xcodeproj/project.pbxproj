@@ -24,7 +24,10 @@
 		ED2169442DE8070200264B04 /* ClientViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169432DE8070200264B04 /* ClientViewmodel.swift */; };
 		ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */; };
 		ED8148102DE98DA4004F5EFE /* ModelDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED81480F2DE98DA4004F5EFE /* ModelDataTest.swift */; };
-		EDA510DE2DE9520C0015139C /* ClientViewmodelintegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA510DD2DE9520C0015139C /* ClientViewmodelintegrationTests.swift */; };
+		ED83902C2DF5616100D4DFA4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED83902B2DF5616100D4DFA4 /* Persistence.swift */; };
+		ED83902F2DF62A2300D4DFA4 /* PersistenceServiceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED83902E2DF62A2300D4DFA4 /* PersistenceServiceIntegrationTests.swift */; };
+		ED9D1FD12DF88EEC00057677 /* MockPersistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D1FD02DF88EEC00057677 /* MockPersistable.swift */; };
+		ED9D1FD32DF89B8600057677 /* ClientViewmodelIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9D1FD22DF89B8600057677 /* ClientViewmodelIntegrationTest.swift */; };
 		EDCBB5F22DF05A8F0039F18C /* PersistenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCBB5F12DF05A8F0039F18C /* PersistenceServiceTests.swift */; };
 		EDE048D72DEEFABF004E9299 /* TestSource.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE048D62DEEFABF004E9299 /* TestSource.json */; };
 /* End PBXBuildFile section */
@@ -60,7 +63,10 @@
 		ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodelTests.swift; sourceTree = "<group>"; };
 		ED81480F2DE98DA4004F5EFE /* ModelDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDataTest.swift; sourceTree = "<group>"; };
 		ED8148112DE9AB21004F5EFE /* Relayance.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Relayance.xctestplan; sourceTree = "<group>"; };
-		EDA510DD2DE9520C0015139C /* ClientViewmodelintegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodelintegrationTests.swift; sourceTree = "<group>"; };
+		ED83902B2DF5616100D4DFA4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		ED83902E2DF62A2300D4DFA4 /* PersistenceServiceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceIntegrationTests.swift; sourceTree = "<group>"; };
+		ED9D1FD02DF88EEC00057677 /* MockPersistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistable.swift; sourceTree = "<group>"; };
+		ED9D1FD22DF89B8600057677 /* ClientViewmodelIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewmodelIntegrationTest.swift; sourceTree = "<group>"; };
 		EDCBB5F12DF05A8F0039F18C /* PersistenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceTests.swift; sourceTree = "<group>"; };
 		EDE048D62DEEFABF004E9299 /* TestSource.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TestSource.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +92,7 @@
 		422740642C3BF4DC00E7522C = {
 			isa = PBXGroup;
 			children = (
+				ED83902E2DF62A2300D4DFA4 /* PersistenceServiceIntegrationTests.swift */,
 				ED8148112DE9AB21004F5EFE /* Relayance.xctestplan */,
 				422740702C3BF4DC00E7522C /* RelayanceApp.swift */,
 				4227406F2C3BF4DC00E7522C /* Relayance */,
@@ -175,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				ED2169462DE8130D00264B04 /* ClientViewmodelTests.swift */,
+				ED83902B2DF5616100D4DFA4 /* Persistence.swift */,
 			);
 			path = ViewmodelTests;
 			sourceTree = "<group>";
@@ -182,7 +190,8 @@
 		EDA510DA2DE951450015139C /* TestIntegration */ = {
 			isa = PBXGroup;
 			children = (
-				EDA510DD2DE9520C0015139C /* ClientViewmodelintegrationTests.swift */,
+				ED9D1FD02DF88EEC00057677 /* MockPersistable.swift */,
+				ED9D1FD22DF89B8600057677 /* ClientViewmodelIntegrationTest.swift */,
 			);
 			path = TestIntegration;
 			sourceTree = "<group>";
@@ -319,9 +328,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED83902F2DF62A2300D4DFA4 /* PersistenceServiceIntegrationTests.swift in Sources */,
 				ED2169292DE7E88900264B04 /* ClientTests.swift in Sources */,
 				ED21692B2DE7EA9E00264B04 /* DateExtensionTests.swift in Sources */,
-				EDA510DE2DE9520C0015139C /* ClientViewmodelintegrationTests.swift in Sources */,
+				ED9D1FD12DF88EEC00057677 /* MockPersistable.swift in Sources */,
+				ED9D1FD32DF89B8600057677 /* ClientViewmodelIntegrationTest.swift in Sources */,
+				ED83902C2DF5616100D4DFA4 /* Persistence.swift in Sources */,
 				EDCBB5F22DF05A8F0039F18C /* PersistenceServiceTests.swift in Sources */,
 				ED8148102DE98DA4004F5EFE /* ModelDataTest.swift in Sources */,
 				ED2169472DE8130D00264B04 /* ClientViewmodelTests.swift in Sources */,

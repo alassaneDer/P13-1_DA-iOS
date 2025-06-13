@@ -27,7 +27,7 @@ struct AjoutClientView: View {
                 .font(.title2)
                 .textInputAutocapitalization(.never)
             Button("Ajouter") {
-                viewmodel.creerNouveauClient(nom: nom, email: email)
+                viewmodel.createNewClient(nom: nom, email: email)
                 dismissModal.toggle()
             }
             .padding(.horizontal, 50)
@@ -40,6 +40,9 @@ struct AjoutClientView: View {
             Spacer()
         }
         .padding()
+//        .alert(item: $viewmodel.savingError) { message in
+//            Alert(title: Text("Erreur"), message: Text(message), dismissButton: .default(Text("OK")))
+//        }
     }
 }
 

@@ -26,14 +26,14 @@ struct DetailClientView: View {
                 .padding()
             Text(client.email)
                 .font(.title3)
-            Text(viewmodel.formatDateVersString(client: client))
+            Text(viewmodel.formatDateToString(client: client))
                 .font(.title3)
             Spacer()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Supprimer") {
-                    viewmodel.supprimerClient(client: client)
+                    viewmodel.deleteClient(client: client)
                     self.presentationMode.wrappedValue.dismiss()
                 }
                 .foregroundStyle(.red)

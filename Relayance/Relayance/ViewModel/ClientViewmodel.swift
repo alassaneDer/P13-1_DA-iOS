@@ -8,39 +8,36 @@
 import Foundation
 
 class ClientViewmodel: ObservableObject {
-    // MARK: - properties
     
-    @Published var clients: [Client] = [] {
-        didSet {
-            print("change detected, sauving clients...")
-            PersistenceService.save(clients: clients)
-        }
+    @Published var clients: [Client] = []
+    @Published var succesMessage: String? = nil
+    @Published var savingError: String? = nil
+    
+    private let persistence: Persistable
+    
+    init(persistence: Persistable = PersistenceService()) {
+        self.persistence = persistence
+        loadClients()
     }
-    
-    @Published var message: String = ""
-    
-    // MARK: - initialization
-
-    init() {
-        chargerClients()
-        print("clients load from persistance.)")
-    }
-    
     
     // MARK: - methods
 
-    func chargerClients() {
-        self.clients = PersistenceService.load()
+    func loadClients() {
+        do {
+            clients = try persistence.load()
+        } catch {
+            savingError = "Loading client failed"
+        }
     }
     
-    func creerNouveauClient(nom: String, email: String) {
+    func createNewClient(nom: String, email: String) {
         guard !nom.isEmpty else {
-            message = "Veuillez renseigner un nom"
+            savingError = "Veuillez renseigner un nom"
             return
         }
         
         guard email.isEmail() else {
-            message = "L'email n'est pas valide"
+            savingError = "L'email n'est pas valide"
             return
         }
         
@@ -55,14 +52,15 @@ class ClientViewmodel: ObservableObject {
         
         if !clientExist(client: newClient) {
             clients.append(newClient)
-            message = "Client ajouté avec succes"
+            succesMessage = "Client ajouté avec succes"
+            save()
         } else {
-            message = "Le client existe déjà."
+            savingError = "Le client existe déjà."
         }
         
     }
     
-    func estNouveauClient(client: Client) -> Bool {
+    func isNewClient(client: Client) -> Bool {
         let today = Date.now
         let dateCreation = client.dateCreation
         return Calendar.current.isDate(dateCreation, inSameDayAs: today)
@@ -72,14 +70,45 @@ class ClientViewmodel: ObservableObject {
         clients.contains { $0.email == client.email }
     }
     
-    func formatDateVersString(client: Client) -> String {
+    func formatDateToString(client: Client) -> String {
         return Date.stringFromDate(client.dateCreation) ?? client.dateCreationString
     }
     
-    func supprimerClient(client: Client) {
+    func deleteClient(client: Client) {
         if let index = clients.firstIndex(where: { $0.id == client.id }) {
             clients.remove(at: index)
-            message = "Client supprimer avec success"
+            save()
+            succesMessage = "Client supprimer avec success"
+        }
+    }
+    
+    private func save() {
+        do {
+            try persistence.save(clients)
+        } catch {
+            savingError = "Saving error: \(error.localizedDescription)"
         }
     }
 }
+
+
+/*
+ // MARK: - properties
+ 
+ @Published var clients: [Client] = [] {
+     didSet {
+         print("change detected, sauving clients...")
+         persistenceService.save(clients)
+     }
+ }
+ 
+ @Published var message: String? = nil
+ let persistenceService: Persistable
+ // MARK: - initialization
+
+ init(persistenceService: PersistenceProtocol = PersistenceService()) {
+     self.persistenceService = persistenceService
+     chargerClients()
+     print("clients load from persistance.)")
+ }
+ */

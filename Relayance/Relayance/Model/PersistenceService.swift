@@ -7,68 +7,46 @@
 
 import Foundation
 
-class PersistenceService {
-    /// optional override URL for testing purpose
-    static var overrideFileURL: URL?
+protocol Persistable {
+    func load() throws -> [Client]
+    func save(_ clients: [Client]) throws
+}
+
+class PersistenceService: Persistable {
     
-    /// URL of the app's document directory
-    private static var documentsFolderURL: URL {
-        do {
-            return try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: true
-            )
-        } catch {
-            fatalError("Failed to access to document directory: \(error).")
-        }
+    private let fileName = "Source.json"
+    
+    private var fileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
     }
     
-    /// Active file URL, either the override or the default Source.json in documents
-    static var activeFileURL: URL {
-        return overrideFileURL ?? documentsFolderURL.appendingPathComponent("Source.json")
+    private var urlBundle: URL? {
+        Bundle.main.url(forResource: "Source", withExtension: "json")
     }
     
-    static func load() -> [Client] {
-        let urlToLoad = activeFileURL
-        if FileManager.default.fileExists(atPath: urlToLoad.path) {
-            do {
-                let data = try Data(contentsOf: urlToLoad)
-                let decoder = JSONDecoder()
-                return try decoder.decode([Client].self, from: data)
-            } catch {
-                print("Failed to load clients from \(urlToLoad): \(error)")
-                if overrideFileURL != nil {
-                    return []
-                }
+    func load() throws -> [Client] {
+        let fileURL = fileURL
+        
+        if !FileManager.default.fileExists(atPath: fileURL.path) {
+            guard let bundleURL = urlBundle else {
+                throw NSError(domain: "No JSON file in the bundle", code: 1)
             }
+            
+            let data = try Data(contentsOf: bundleURL)
+            let elements = try JSONDecoder().decode([Client].self, from: data)
+            
+            try save(elements)
+            return elements
         }
-        do {
-            return try ModelData.chargement("Source")
-        } catch {
-            print("Failed to load defaul clients: \(error)")
-            return []
-        }
+        
+        let data = try Data(contentsOf: fileURL)
+        return try JSONDecoder().decode([Client].self, from: data)
+        
     }
     
-    
-    static func save(clients: [Client]) {
-        do {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            let data = try encoder.encode(clients)
-            try data.write(to: activeFileURL, options: .atomic)
-        } catch {
-            print("Failed to save clients to \(activeFileURL): \(error)")
-        }
+    func save(_ clients: [Client]) throws {
+        let data = try JSONEncoder().encode(clients)
+        try data.write(to: fileURL, options: .atomic)
     }
     
-    
-    /// clear test data by removing the override file
-    static func clearTestData() {
-        if let testURL = overrideFileURL, FileManager.default.fileExists(atPath: testURL.path) {
-            try? FileManager.default.removeItem(at: testURL)
-        }
-    }
 }

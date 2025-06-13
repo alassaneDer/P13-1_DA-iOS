@@ -9,80 +9,71 @@ import XCTest
 @testable import Relayance
 
 final class ClientViewmodelTests: XCTestCase {
-    var viewModel: ClientViewmodel!
-    var testFileURL: URL!
     
-    // MARK: - Setup and Teardown
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
-        // Create a unique temporary file URL for testing
-        testFileURL = FileManager.default.temporaryDirectory.appendingPathComponent("TestSource_\(UUID().uuidString).json")
-        PersistenceService.overrideFileURL = testFileURL
-        
-        // Initialize the view model
-        viewModel = ClientViewmodel()
-    }
-    
-    override func tearDownWithError() throws {
-        // Clean up test data
-        PersistenceService.clearTestData()
-        PersistenceService.overrideFileURL = nil
-        viewModel = nil
-        try super.tearDownWithError()
-    }
-    
+    // MARK: load()
+    // MARK: save()
     // MARK: creerNouveauClient()
-    func test_creerNouveauClient_failWithIncorrectEmail() {
+    func test_createNewClient_failWithIncorrectEmail() {
         /// Given : the email is incorrect
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         let email = "incorrectEmail"
-        let viewmodel = ClientViewmodel()
-        
+
         /// When : the client is created with the incorrect email
-        viewmodel.creerNouveauClient(nom: "John Doe", email: email)
+        viewmodel.createNewClient(nom: "John Doe", email: email)
         
         /// Then :
-        XCTAssertEqual(viewmodel.message, "L'email n'est pas valide", "Error message should be set")
+        XCTAssertEqual(viewmodel.clients.count, 0)
+        XCTAssertEqual(viewmodel.savingError, "L'email n'est pas valide", "Error message should be set")
+        XCTAssertFalse(mock.savedCalled, "nothing should be saved")
     }
     
-    func test_creerNouveauClient_failWithEmptyName() {
+    func test_createNewClient_failWithEmptyName() {
         /// Given : the email is incorrect
-        let name = ""
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         
+        let name = ""
         /// When : the client is created with the incorrect email
-        viewmodel.creerNouveauClient(nom: name, email: "correct@mail.com")
+        viewmodel.createNewClient(nom: name, email: "correct@mail.com")
         
         /// Then :
-        XCTAssertEqual(viewmodel.message, "Veuillez renseigner un nom", "Error message should be set")
+        XCTAssertEqual(viewmodel.clients.count, 0)
+        XCTAssertEqual(viewmodel.savingError, "Veuillez renseigner un nom", "Error message should be set")
+        XCTAssertFalse(mock.savedCalled, "nothing should be saved")
     }
     
-    func test_creerNouveauClient_storeClientCorrectly() {
+    func test_createNewClient_storeClientCorrectly() {
         /// Given
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         
         /// When
-        viewmodel.creerNouveauClient(nom: "John Cena", email: "johncena@mail.com")
+        viewmodel.createNewClient(nom: "John Cena", email: "johncena@mail.com")
         
         // Then: Verify the client is added
+        XCTAssertEqual(viewmodel.clients.count, 1)
         XCTAssertTrue(viewmodel.clients.contains { $0.email == "johncena@mail.com" }, "Client should be added")
-        XCTAssertEqual(viewmodel.message, "Client ajouté avec succes", "Success message should be set")
+        XCTAssertEqual(viewmodel.succesMessage, "Client ajouté avec succes", "Success message should be set")
+        XCTAssertTrue(mock.savedCalled, "created client should be should be saved")
     }
     
-    func test_creerNouveauClient_failIfClientAlreadyExist() {
+    func test_createNewClient_failIfClientAlreadyExist() {
         /// Given
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         viewmodel.clients.append(Client(nom: "John Doe", email: "johndoe@mail.com", dateCreationString: "01-01-2025"))
         /// When
-        viewmodel.creerNouveauClient(nom: "John Doe", email: "johndoe@mail.com")
+        viewmodel.createNewClient(nom: "John Doe", email: "johndoe@mail.com")
         
         /// Then
-        XCTAssertEqual(viewmodel.message, "Le client existe déjà.")
+        XCTAssertEqual(viewmodel.clients.count, 1)
+        XCTAssertEqual(viewmodel.savingError, "Le client existe déjà.")
+        XCTAssertFalse(mock.savedCalled, "nothing should be saved")
     }
     
     // MARK: - estNouveauClient()
-    func test_estNouveauClient_ShouldReturnTrueForSameDay() {
+    func test_isNewClient_ShouldReturnTrueForSameDay() {
         /// Given
         let now = Date.now
         let dateFormatter = DateFormatter()
@@ -90,22 +81,24 @@ final class ClientViewmodelTests: XCTestCase {
         let nowString = dateFormatter.string(from: now)
         let client = Client(nom: "John Doe", email: "johndoe@mail.com", dateCreationString: nowString)
         
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         /// When
-        let isNew = viewmodel.estNouveauClient(client: client)
+        let isNew = viewmodel.isNewClient(client: client)
         
         /// Then
         XCTAssertTrue(isNew, "Client should be considered new")
     }
     
-    func test_estNouveauClient_ShouldReturnFalseIfDateIsOld() {
+    func test_isNewClient_ShouldReturnFalseIfDateIsOld() {
         /// Given : le client à été créé à une date entérieure
         let oldDateString = "2022-05-24"
         let client = Client(nom: "John Doe", email: "johndoe@mail.com", dateCreationString: oldDateString)
         
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         /// When
-        let isNew = viewmodel.estNouveauClient(client: client)
+        let isNew = viewmodel.isNewClient(client: client)
         
         /// Then
         XCTAssertFalse(isNew, "Client should not be considered new")
@@ -117,7 +110,8 @@ final class ClientViewmodelTests: XCTestCase {
         /// Given
         let todayString = "2022-05-24"
         let newClient = Client(nom: "John Doe", email: "johndoe@mail.com", dateCreationString: todayString)
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         viewmodel.clients.append(newClient)
         /// When
         let isExistedClient = viewmodel.clientExist(client: newClient)
@@ -130,7 +124,8 @@ final class ClientViewmodelTests: XCTestCase {
         let todayString = "2022-05-24"
         let newClient = Client(nom: "Jack Doe", email: "jackdoe@mail.com", dateCreationString: todayString)
         
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         /// When
         let isExistedClient = viewmodel.clientExist(client: newClient)
         /// Then
@@ -138,32 +133,36 @@ final class ClientViewmodelTests: XCTestCase {
     }
     
     // MARK: - tests formatDateVersString
-    func test_formatDateVersString_returnFormattedDate() {
+    func test_formatDateToString_returnFormattedDate() {
         /// Given
         let date = "2024-01-01T12:00:00.000Z"
         let expectedDate = "01-01-2024"
         
         /// When
         let client = Client(nom: "test", email: "test@mail.com", dateCreationString: date)
-        let viewmodel = ClientViewmodel()
-        let formattedDate = viewmodel.formatDateVersString(client: client)
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
+        let formattedDate = viewmodel.formatDateToString(client: client)
         
         /// Then
         XCTAssertEqual(formattedDate, expectedDate, "Date should be formatted correctly")
     }
     
     // MARK: - tests supprimerClient
-    func test_supprimerClient_deleteClientCorrectly() {
+    func test_deleteClient_deleteClientCorrectly() {
         /// Given
-        let viewmodel = ClientViewmodel()
+        let mock = MockPersistence()
+        let viewmodel = ClientViewmodel(persistence: mock)
         let client = Client(nom: "test", email: "testdeletion@mail.com", dateCreationString: "01-01-2025")
         viewmodel.clients.append(client)
         
         /// When
-        viewmodel.supprimerClient(client: client)
+        viewmodel.deleteClient(client: client)
         
         /// Then: Verify the client is removed
+        XCTAssertEqual(viewmodel.clients.count, 0)
+        XCTAssertTrue(mock.savedCalled, "nothing should be saved")
         XCTAssertFalse(viewmodel.clients.contains { $0.email == "testdeletion@mail.com" }, "Client should be deleted")
-        XCTAssertEqual(viewmodel.message, "Client supprimer avec success", "Success message should be set")
+        XCTAssertEqual(viewmodel.succesMessage, "Client supprimer avec success", "Success message should be set")
     }
 }

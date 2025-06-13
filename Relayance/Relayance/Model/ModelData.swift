@@ -13,7 +13,7 @@ struct ModelData {
     /// - throws: An error if the file connot be found or decoded
     static func chargement<T: Decodable>(_ filename: String, as type: T.Type = T.self) throws -> T {
         guard let fileURL = Bundle.main.url(forResource: filename, withExtension: "json") else {
-            throw ModelDataError.fileNotFound(filename)
+            throw URLError(.badURL)
         }
         
         let data = try Data(contentsOf: fileURL)
@@ -22,8 +22,8 @@ struct ModelData {
     }
 }
 
-enum ModelDataError: Error {
-    case fileNotFound(String)
-    case dataLoadingFailed(String, Error)
-    case decodingFailed(String, Error)
-}
+//enum ModelDataError: Error {
+//    case fileNotFound(String)
+//    case dataLoadingFailed(String, Error)
+//    case decodingFailed(String, Error)
+//}
